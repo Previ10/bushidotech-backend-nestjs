@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14.11
+    restart: always
+    container_name: bushidotech-db
+    environment:
+      POSTGRES_DB: bushidotech_db
+      POSTGRES_PASSWORD: 38986871
+      POSTGRES_USER: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./bushidotech_postgres:/var/lib/postgresql/data
