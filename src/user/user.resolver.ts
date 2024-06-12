@@ -13,17 +13,17 @@ export class UserResolver {
     return await this.userService.create(createUserInput);
   }
 
-  @Query(() => [User], { name: 'users' }) 
+  @Query(() => [User], { name: 'getUsers' }) 
   findAll() {
     return this.userService.findAll();
   }
   
-  @Query(() => User, { name: 'user' }) 
+  @Query(() => User, { name: 'getUser' }) 
   findOne(@Args('id', { type: () => ID },  ) id: string) {
     return this.userService.findOne(id);
   }
   
-  @Mutation(() => User)
+  @Mutation(() => User, { name: 'updateUser' })
   async updateUser(
     @Args('id', { type: () => ID }) id: string,
     @Args('updateUserInput') updateUserInput: UpdateUserInput
@@ -32,7 +32,7 @@ export class UserResolver {
   }
 
 
-  @Mutation(() => User)
+  @Mutation(() => User, { name: 'deleteUserById' })
   async removeUser(@Args('id', { type: () => ID }) id: string) {
     return this.userService.remove(id);
   }
