@@ -21,17 +21,19 @@ export class UserService {
    
   async registerUser(signupInput: SignupInput): Promise<User> {
     try {
-      const newUser = this.usersRepository.create(signupInput)
-      return await this.usersRepository.save(newUser);
+        const existingUser = await this.usersRepository.findOne({ where: { email: signupInput.email } });
+        if (existingUser) {
+            throw new BadRequestException('Ya existe un usuario cargado con este email');
+        }
 
+        const newUser = this.usersRepository.create(signupInput);
+        return await this.usersRepository.save(newUser);
+    } catch (error) {
+        console.error('Error al registrar usuario:', error);
+        throw new BadRequestException("Algo salió mal al registrar el usuario");
     }
-    catch{
+}
 
-      console.log(error)
-      throw new BadRequestException("Algo salio mal");
-    }
-     
-  }
   
   async create(createUserInput: CreateUserInput): Promise <User> {
     const newUser = this.usersRepository.create(createUserInput)

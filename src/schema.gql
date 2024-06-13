@@ -15,6 +15,11 @@ type User {
   departamento: String
 }
 
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
 type Query {
   getUsers: [User!]!
   getUser(id: ID!): User!
@@ -24,6 +29,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
   deleteUserById(id: ID!): User!
+  signup(signupInput: SignupInput!): AuthResponse!
 }
 
 input CreateUserInput {
@@ -48,4 +54,11 @@ input UpdateUserInput {
   piso: Int
   ciudad: String
   departamento: String
+}
+
+input SignupInput {
+  email: String!
+  name: String!
+  lastname: String!
+  passWord: String!
 }

@@ -14,12 +14,11 @@ export class SignupInput {
     
     @Field(()=> String)
     @IsNotEmpty()
-    lastName : string;
+    lastname : string;
     
     @Field(()=> String)
     @MinLength(6)
     passWord : string;
-
 
 
 
