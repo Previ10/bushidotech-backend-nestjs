@@ -16,14 +16,14 @@ type User {
 }
 
 type Query {
-  users: [User!]!
-  user(id: ID!): User!
+  getUsers: [User!]!
+  getUser(id: ID!): User!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
-  removeUser(id: ID!): User!
+  deleteUserById(id: ID!): User!
 }
 
 input CreateUserInput {

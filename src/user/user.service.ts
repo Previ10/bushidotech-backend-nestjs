@@ -1,9 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserInput } from './dto/update-user.input';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SignupInput } from 'src/auth/dto/inputs/singup.imputs';
+import { error } from 'console';
 
 @Injectable()
 export class UserService {
@@ -14,6 +16,21 @@ export class UserService {
     private readonly usersRepository: Repository<User>
   ) {
     
+  }
+
+   
+  async registerUser(signupInput: SignupInput): Promise<User> {
+    try {
+      const newUser = this.usersRepository.create(signupInput)
+      return await this.usersRepository.save(newUser);
+
+    }
+    catch{
+
+      console.log(error)
+      throw new BadRequestException("Algo salio mal");
+    }
+     
   }
   
   async create(createUserInput: CreateUserInput): Promise <User> {
