@@ -20,9 +20,24 @@ type AuthResponse {
   user: User!
 }
 
+type Product {
+  id: ID!
+  name: String!
+  features: [String!]!
+  description: String
+  image: String
+  brand: String
+  type: String
+  precio: Float
+  stock: Float
+  garantia: [String!]
+}
+
 type Query {
   getUsers: [User!]!
   getUser(id: ID!): User!
+  getProducts: [Product!]!
+  getProduct(id: Int!): Product!
 }
 
 type Mutation {
@@ -30,6 +45,8 @@ type Mutation {
   updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
   deleteUserById(id: ID!): User!
   signup(signupInput: SignupInput!): AuthResponse!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(id: Int!): Product!
 }
 
 input CreateUserInput {
@@ -61,4 +78,16 @@ input SignupInput {
   name: String!
   lastname: String!
   passWord: String!
+}
+
+input CreateProductInput {
+  name: String!
+  features: [String!]!
+  description: String
+  image: String
+  brand: String
+  type: String
+  precio: Float
+  stock: Int
+  garantia: [String!]
 }

@@ -7,6 +7,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
 
 
 @Module({
@@ -32,6 +33,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    ProductsModule,
   ],
   controllers: [],
   providers: [],

@@ -19,6 +19,7 @@ export class SignupInput {
     @Field(()=> String)
     @MinLength(6)
     passWord : string;
+    
 
 
 

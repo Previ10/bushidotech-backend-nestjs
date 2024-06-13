@@ -8,13 +8,13 @@ import { UserService } from 'src/user/user.service';
 export class AuthService {
 
 constructor(
-    private readonly userServide:UserService,
+    private readonly userServise:UserService,
 ){
 
 }
 
 async signup(signupInput: SignupInput): Promise<AuthResponse> {
-    const user = await this.userServide.registerUser(signupInput);
+    const user = await this.userServise.registerUser(signupInput);
     const token = "ABC123"
 
     return {
