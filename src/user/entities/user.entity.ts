@@ -1,7 +1,8 @@
 // user.entity.ts
 
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Product } from 'src/products/entities/product.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 @ObjectType()
 @Entity('user') 
 export class User {
@@ -15,9 +16,9 @@ export class User {
 
   @Column()
   @Field()
-  lastname:string; ;
-
-  @Column( {nullable:true} )
+  lastname:string; 
+  
+  @Column( {nullable:true, unique:true} )
   @Field( ()=> String)
   email:string;
   
@@ -44,4 +45,27 @@ export class User {
   @Column( {nullable:true} )
   @Field( {nullable:true} ) 
   departamento?: string;
+
+  @Column()
+  passWord: string
+
+  @Column({
+    type:'text',
+    array:true,
+    default:['user']
+  })
+  @Field(() => [String])
+  rol: string[]
+
+  @Column({
+    type:'boolean',
+    default: true,
+  })
+  @Field(() => Boolean)
+  isActive:true
+
+  @OneToMany(() => Product, (product) =>product.user, { eager: true })
+  @Field(() => [Product], { nullable: true })
+  products: Product[];
+
 }

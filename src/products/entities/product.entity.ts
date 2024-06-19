@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType, Float } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @ObjectType()
 @Entity('products')
@@ -43,4 +44,8 @@ export class Product {
   @Column('text', { array: true, nullable: true })
   @Field(() => [String], { nullable: true })
   garantia: string[];
+  
+  @ManyToOne(() => User, (user) => user.products)
+  @Field( ()=> User )
+  user: User;
 }

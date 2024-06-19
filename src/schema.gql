@@ -2,24 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: ID!
-  name: String!
-  lastname: String!
-  email: String!
-  dni: String
-  calle: String
-  numero: Float
-  piso: Float
-  ciudad: String
-  departamento: String
-}
-
-type AuthResponse {
-  token: String!
-  user: User!
-}
-
 type Product {
   id: ID!
   name: String!
@@ -31,13 +13,35 @@ type Product {
   precio: Float
   stock: Float
   garantia: [String!]
+  user: User!
+}
+
+type User {
+  id: ID!
+  name: String!
+  lastname: String!
+  email: String!
+  dni: String
+  calle: String
+  numero: Float
+  piso: Float
+  ciudad: String
+  departamento: String
+  rol: [String!]!
+  isActive: Boolean!
+  products: [Product!]
+}
+
+type AuthResponse {
+  token: String!
+  user: User!
 }
 
 type Query {
   getUsers: [User!]!
   getUser(id: ID!): User!
   getProducts: [Product!]!
-  getProduct(id: Int!): Product!
+  getProductByid(id: ID!): Product!
 }
 
 type Mutation {
@@ -59,6 +63,7 @@ input CreateUserInput {
   piso: Int
   ciudad: String
   departamento: String
+  passWord: String!
 }
 
 input UpdateUserInput {
@@ -71,6 +76,7 @@ input UpdateUserInput {
   piso: Int
   ciudad: String
   departamento: String
+  passWord: String
 }
 
 input SignupInput {
