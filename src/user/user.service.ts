@@ -6,6 +6,7 @@ import { Repository, EntityNotFoundError } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { SignupInput } from 'src/auth/dto/inputs/singup.inputs';
+import { ValidRols } from 'src/auth/enums/valid-rols.enum';
 
 @Injectable()
 export class UserService {
@@ -56,8 +57,13 @@ export class UserService {
     return await this.usersRepository.save(newUser);
   }
 
-  async findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async findAll(rol: ValidRols[]): Promise<User[]> {
+
+    if(rol.length === 0) return this.usersRepository.find();
+    return this.usersRepository.createQueryBuilder()
+    .andWhere('ARRAY[rol] && ARRAY[:...rol]')
+    .setParameter('rol', rol)
+    .getMany();
   }
 
   async findOne(id: string): Promise<User> {

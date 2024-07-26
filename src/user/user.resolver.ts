@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { ValidRolsArgs } from './dto/args/rols.args';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -13,10 +14,15 @@ export class UserResolver {
     return await this.userService.create(createUserInput);
   }
 
-  @Query(() => [User], { name: 'getUsers' }) 
-  findAll() {
-    return this.userService.findAll();
+ @Query(() => [User], { name: 'getUsers' })
+  async findAll(@Args() validRols: ValidRolsArgs): Promise<User[]> {
+
+    console.log({validRols})
+    return await this.userService.findAll(
+      validRols.rols
+    );
   }
+
   
   @Query(() => User, { name: 'getUser' }) 
   findOne(@Args('id', { type: () => ID },  ) id: string) {

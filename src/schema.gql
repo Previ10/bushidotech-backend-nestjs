@@ -38,11 +38,18 @@ type AuthResponse {
 }
 
 type Query {
-  getUsers: [User!]!
+  getUsers(rols: [ValidRols!] = []): [User!]!
   getUser(id: ID!): User!
   revalidate: AuthResponse!
   getProducts: [Product!]!
   getProductByid(id: ID!): Product!
+}
+
+"""These are authorized roles"""
+enum ValidRols {
+  admin
+  user
+  superUser
 }
 
 type Mutation {
