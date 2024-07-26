@@ -89,6 +89,17 @@ export class UserService {
     return { ...user, id };
   }
 
+  async findOneByid(id: string): Promise<User> {
+    try {
+      return await this.usersRepository.findOneByOrFail({ id });
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new NotFoundException(`${id} not found`);
+      }
+      throw error;
+    }
+  }
+
   // Manejo de errores
   private handleDBErrors(error: any): never {
     if (error.code === '23505') {
@@ -102,4 +113,6 @@ export class UserService {
     this.logger.error(error);
     throw new InternalServerErrorException('Please check the server logs for more details');
   }
+
+
 }
