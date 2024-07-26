@@ -22,6 +22,11 @@ export class UserResolver {
   findOne(@Args('id', { type: () => ID },  ) id: string) {
     return this.userService.findOne(id);
   }
+
+  // @Query(() => User, { name: 'getUser' }) 
+  // findOneByemail(@Args('id', { type: () => ID },  ) id: string) {
+  //   return this.userService.findOne(id);
+  // }
   
   @Mutation(() => User, { name: 'updateUser' })
   async updateUser(

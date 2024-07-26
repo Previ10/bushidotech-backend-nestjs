@@ -49,6 +49,7 @@ type Mutation {
   updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
   deleteUserById(id: ID!): User!
   signup(signupInput: SignupInput!): AuthResponse!
+  login(loginInput: LoginInput!): AuthResponse!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(id: Int!): Product!
 }
@@ -83,6 +84,11 @@ input SignupInput {
   email: String!
   name: String!
   lastname: String!
+  passWord: String!
+}
+
+input LoginInput {
+  email: String!
   passWord: String!
 }
 
