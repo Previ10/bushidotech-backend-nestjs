@@ -15,10 +15,29 @@ export class SignupInput {
     @Field(()=> String)
     @IsNotEmpty()
     lastname : string;
+
+    @Field(()=> String)
+    @IsNotEmpty()
+    dni : string;
+
+    @Field(()=> String)
+    @IsNotEmpty()
+    adress : string;
+
+    @Field(()=> String)
+    @IsNotEmpty()
+    provincia : string;
+
+    @Field(()=> String)
+    @IsNotEmpty()
+    ciudad : string;
+    
     
     @Field(()=> String)
     @MinLength(6)
     passWord : string;
+
+    
     
 
 

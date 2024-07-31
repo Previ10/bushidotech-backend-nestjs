@@ -22,11 +22,11 @@ type User {
   lastname: String!
   email: String!
   dni: String
-  calle: String
-  numero: Float
-  piso: Float
+  adress: String
+  numero: String
+  piso: String
+  provincia: String
   ciudad: String
-  departamento: String
   rol: [String!]!
   isActive: Boolean!
   products: [Product!]
@@ -67,11 +67,11 @@ input CreateUserInput {
   lastname: String!
   email: String
   dni: String
-  calle: String
+  adress: String
   numero: Int
   piso: Int
+  provincia: String
   ciudad: String
-  departamento: String
   passWord: String!
 }
 
@@ -80,11 +80,11 @@ input UpdateUserInput {
   lastname: String
   email: String
   dni: String
-  calle: String
+  adress: String
   numero: Int
   piso: Int
+  provincia: String
   ciudad: String
-  departamento: String
   passWord: String
 }
 
@@ -92,6 +92,10 @@ input SignupInput {
   email: String!
   name: String!
   lastname: String!
+  dni: String!
+  adress: String!
+  provincia: String!
+  ciudad: String!
   passWord: String!
 }
 
