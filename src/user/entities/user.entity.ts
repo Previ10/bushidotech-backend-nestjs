@@ -28,23 +28,23 @@ export class User {
 
   @Column( {nullable:true} )
   @Field( {nullable:true} )
-  calle: string;
+  adress: string;
 
   @Column( {nullable:true} )
   @Field( {nullable:true} )
-  numero: number;
+  numero: string;
 
   @Column( {nullable:true} )
   @Field( {nullable:true} ) 
-  piso?: number;
+  piso?: string;
 
   @Column( {nullable:true} )
   @Field( {nullable:true} )
-  ciudad: string;
+  provincia: string;
 
   @Column( {nullable:true} )
   @Field( {nullable:true} ) 
-  departamento?: string;
+  ciudad?: string;
 
   @Column()
   passWord: string

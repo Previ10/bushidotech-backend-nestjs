@@ -26,25 +26,24 @@ export class CreateUserInput {
   @IsString()
   @IsOptional()
   @Field(() => String, { nullable: true })
-  calle?: string;
+  adress?: string;
 
   @IsNumber()
   @Field(() => Int, { nullable: true })
-  numero?: number;
+  numero?: string;
   
   @IsNumber()
   @Field(() => Int, { nullable: true })
-  piso?: number;
+  piso?: string;
+  
+  @IsString()
+  @Field(() => String, { nullable: true })
+  provincia?: string;
   
   @IsString()
   @Field(() => String, { nullable: true })
   ciudad?: string;
-  
-  @IsString()
-  @Field(() => String, { nullable: true })
-  departamento?: string;
 
-    
   @Field(()=> String)
   @MinLength(6)
   passWord : string;
