@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { SignupInput } from 'src/auth/dto/inputs/singup.inputs';
 import { ValidRols } from 'src/auth/enums/valid-rols.enum';
+import { MailerService } from 'src/utils/mailer.service';
 
 @Injectable()
 export class UserService {
@@ -17,7 +18,8 @@ export class UserService {
 
   constructor(
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>
+    private readonly usersRepository: Repository<User>,
+    private readonly mailerService: MailerService
   ) {}
 
   async registerUser(signupInput: SignupInput): Promise<User> {
@@ -36,7 +38,17 @@ export class UserService {
         ...signupInput,
         passWord: bcrypt.hashSync(signupInput.passWord, 10)
       });
-      return await this.usersRepository.save(newUser);
+
+      const savedUser = await this.usersRepository.save(newUser);
+
+      // Envía el correo electrónico
+      await this.mailerService.sendMail(
+        savedUser.email,
+        'Bienvenido a nuestra aplicación',
+        'Gracias por registrarte!'
+      );
+
+      return savedUser;
     } catch (error) {
       this.handleDBErrors(error);
     }
@@ -54,7 +66,16 @@ export class UserService {
     }
 
     const newUser = this.usersRepository.create(createUserInput);
-    return await this.usersRepository.save(newUser);
+    const savedUser = await this.usersRepository.save(newUser);
+
+    // Envía el correo electrónico
+    await this.mailerService.sendMail(
+      savedUser.email,
+      'Bienvenido a nuestra aplicación',
+      'Gracias por registrarte!'
+    );
+
+    return savedUser;
   }
 
   async findAll(rol: ValidRols[]): Promise<User[]> {
