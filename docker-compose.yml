@@ -12,4 +12,7 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - ./bushidotech_postgres:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

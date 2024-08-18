@@ -2,6 +2,8 @@
 /dist
 /node_modules
 /build
+/bushidotech_postgres
+schema.gql
 
 # Logs
 logs
@@ -41,6 +43,7 @@ lerna-debug.log*
 .env.test.local
 .env.production.local
 .env.local
+schema.gql
 
 # temp directory
 .temp
