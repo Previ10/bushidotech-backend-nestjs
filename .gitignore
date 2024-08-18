@@ -3,6 +3,7 @@
 /node_modules
 /build
 /bushidotech_postgres
+schema.gql
 
 # Logs
 logs
