@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { SignupInput } from 'src/auth/dto/inputs/singup.inputs';
 import { ValidRols } from 'src/auth/enums/valid-rols.enum';
 import { MailerService } from 'src/utils/mailer.service';
+import { TEMPLATE_WELCOME } from 'src/utils/all-templates';
 
 @Injectable()
 export class UserService {
@@ -41,11 +42,16 @@ export class UserService {
 
       const savedUser = await this.usersRepository.save(newUser);
 
+      let dataEmail = {
+        type : 'welcome',
+        email : savedUser.email,
+        data : {
+          username: savedUser.email
+        },
+      }
       // Envía el correo electrónico
       await this.mailerService.sendMail(
-        savedUser.email,
-        'Bienvenido a nuestra aplicación',
-        'Gracias por registrarte!'
+        dataEmail, 
       );
 
       return savedUser;
@@ -68,11 +74,16 @@ export class UserService {
     const newUser = this.usersRepository.create(createUserInput);
     const savedUser = await this.usersRepository.save(newUser);
 
+    let dataEmail = { 
+      type : "welcome",
+      email : savedUser.email,
+      data : {
+        username: savedUser.email
+      },
+    }
     // Envía el correo electrónico
     await this.mailerService.sendMail(
-      savedUser.email,
-      'Bienvenido a nuestra aplicación',
-      'Gracias por registrarte!'
+      dataEmail
     );
 
     return savedUser;
