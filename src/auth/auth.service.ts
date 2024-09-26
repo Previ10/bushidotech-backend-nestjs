@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthResponse } from './types/login-response.type';
 import { UserService } from 'src/user/user.service';
 import { LoginInput } from './dto/inputs/login.inputs';
-import * as bcrypt from 'bcrypt';
+const bcrypt = require('bcryptjs');
 import { SignupInput } from './dto/inputs/singup.inputs';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/entities/user.entity';

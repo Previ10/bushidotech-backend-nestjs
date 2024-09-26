@@ -1,5 +1,6 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
 import { IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from 'class-validator';
+// import { userRolesEnum } from '../entities/user.entity';
 
 @InputType()
 export class CreateUserInput {
@@ -27,6 +28,9 @@ export class CreateUserInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
   adress?: string;
+
+  // @Field(() => [userRolesEnum], { defaultValue: [userRolesEnum.User] })
+  // roles: userRolesEnum[];
 
   @IsNumber()
   @Field(() => Int, { nullable: true })

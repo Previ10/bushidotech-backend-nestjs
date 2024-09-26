@@ -4,7 +4,7 @@ import { CreateUserInput } from './dto/create-user.input';
 import { User } from './entities/user.entity';
 import { Repository, EntityNotFoundError } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as bcrypt from 'bcrypt';
+const bcrypt = require('bcryptjs');
 import { SignupInput } from 'src/auth/dto/inputs/singup.inputs';
 import { ValidRols } from 'src/auth/enums/valid-rols.enum';
 import { MailerService } from 'src/utils/mailer.service';

@@ -1,8 +1,14 @@
 // user.entity.ts
-
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Product } from 'src/products/entities/product.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+
+// export enum userRolesEnum {
+//   Admin = "Admin",
+//   User = "User",
+//   Moderator = "Moderator"
+// }
+
 @ObjectType()
 @Entity('user') 
 export class User {
@@ -16,7 +22,16 @@ export class User {
 
   @Column()
   @Field()
-  lastname:string; 
+  lastname:string;
+  
+  // @Column({
+  //   type: 'enum',
+  //   enum: userRolesEnum,
+  //   array: true,
+  //   default: [userRolesEnum.User],
+  // })
+  // @Field(() => [userRolesEnum], { defaultValue: [userRolesEnum.User] })
+  // roles: userRolesEnum[];
   
   @Column( {nullable:true, unique:true} )
   @Field( ()=> String)

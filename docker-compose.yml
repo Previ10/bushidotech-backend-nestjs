@@ -1,6 +1,23 @@
 version: '3.8'
 
 services:
+  app:
+    build: .
+    container_name: bushidotech-app
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DB_PASSWORD: 38986871
+      DB_NAME: bushidotech_db
+      DB_HOST: bushidotech-db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      JWT_SECRET: tHisIsmYs3cr3tJ4s0Nw3bT0K3N
+      PASSWORD: 1y3wgtcDEIH2WBnQ
+
   postgres:
     image: postgres:14.11
     restart: always
