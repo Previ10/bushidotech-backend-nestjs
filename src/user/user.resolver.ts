@@ -48,5 +48,21 @@ export class UserResolver {
     return this.userService.remove(id);
   }
 
+  @Mutation(() => User)
+  async addProductToFavorites(
+    @Args('userId', { type: () => Int }) userId: number,
+    @Args('productId', { type: () => String }) productId: string,
+  ): Promise<User> {
+    return this.userService.addToFavorites(userId, productId);
+  }
+
+  @Mutation(() => User)
+  async removeFromFavorites(
+    @Args('userId') userId: number,
+    @Args('productId') productId: string,
+  ): Promise<User> {
+    return this.userService.removeFromFavorites(userId, productId);
+  }
+
 
 }

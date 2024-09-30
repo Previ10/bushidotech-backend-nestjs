@@ -47,5 +47,5 @@ export class Product {
   
   @ManyToOne(() => User, (user) => user.products)
   @Field( ()=> User )
-  user: User;
+  user: User[];
 }

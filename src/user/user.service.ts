@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 import { SignupInput } from 'src/auth/dto/inputs/singup.inputs';
 import { ValidRols } from 'src/auth/enums/valid-rols.enum';
 import { MailerService } from 'src/utils/mailer.service';
-import { TEMPLATE_WELCOME } from 'src/utils/all-templates';
+import { Product } from 'src/products/entities/product.entity';
 
 @Injectable()
 export class UserService {
@@ -19,8 +19,10 @@ export class UserService {
 
   constructor(
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
-    private readonly mailerService: MailerService
+    private readonly usersRepository: Repository<User>,  // El repositorio de usuarios
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,  // El repositorio de productos
+    private readonly mailerService: MailerService,
   ) {}
 
   async registerUser(signupInput: SignupInput): Promise<User> {
@@ -136,6 +138,44 @@ export class UserService {
       }
       throw error;
     }
+  }
+
+  async addToFavorites(userId: number, productId: string): Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: { id: userId.toString() },
+      relations: ['products'],
+    });
+
+    const product = await this.productRepository.findOne({ where: { id: productId } });
+
+    if (!user || !product) {
+      throw new Error('Usuario o producto no encontrado');
+    }
+
+    user.products.push(product);
+    return this.usersRepository.save(user);
+  }
+
+  async removeFromFavorites(userId: number, productId: string): Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: { id: userId.toString() },
+      relations: ['products'],  
+    });
+
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    const product = await this.productRepository.findOne({ where: { id: productId } });
+
+    if (!product) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+
+    // Filtrar la lista de productos del usuario para eliminar el producto
+    user.products = user.products.filter(p => p.id !== product.id);
+
+    return await this.usersRepository.save(user);  // Guarda los cambios en la base de datos
   }
 
   // Manejo de errores
