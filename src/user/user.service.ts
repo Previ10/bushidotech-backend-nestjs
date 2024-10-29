@@ -178,6 +178,25 @@ export class UserService {
     return await this.usersRepository.save(user);  // Guarda los cambios en la base de datos
   }
 
+  async addToCart(userId: number, productId: string): Promise<User> {
+    const user = await this.usersRepository.findOne({where: { id: userId.toString() }});
+    const product = await this.productRepository.findOne({where: { id: productId }});
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    user.cart.push(product);
+    return this.usersRepository.save(user);
+  }
+
+  async removeFromCart(userId: number, productId: string): Promise<User> {
+    const user = await this.usersRepository.findOne({where: { id: userId.toString() }});
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    user.cart = user.cart.filter(product => product.id !== productId);
+    return this.usersRepository.save(user);
+  }
+
   // Manejo de errores
   private handleDBErrors(error: any): never {
     if (error.code === '23505') {

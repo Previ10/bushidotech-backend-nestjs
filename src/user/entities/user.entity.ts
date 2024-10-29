@@ -83,4 +83,11 @@ export class User {
   @Field(() => [Product], { nullable: true })
   products: Product[];
 
+  @Column({
+    type: 'jsonb',
+    default: [],
+  })
+  @Field(() => [Product], { nullable: true })
+  cart: Product[];
+
 }

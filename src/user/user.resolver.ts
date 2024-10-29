@@ -64,5 +64,21 @@ export class UserResolver {
     return this.userService.removeFromFavorites(userId, productId);
   }
 
+  @Mutation(() => User)
+  async addProductToCart(
+    @Args('userId', { type: () => Int }) userId: number,
+    @Args('productId', { type: () => String }) productId: string,
+  ): Promise<User> {
+    return this.userService.addToCart(userId, productId);
+  }
+
+  @Mutation(() => User)
+  async removeFromCart(
+    @Args('userId', { type: () => Int }) userId: number,
+    @Args('productId') productId: string,
+  ): Promise<User> {
+    return this.userService.removeFromCart(userId, productId);
+  }
+
 
 }
