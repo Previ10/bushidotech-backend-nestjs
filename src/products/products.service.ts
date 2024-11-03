@@ -23,9 +23,8 @@ export class ProductsService {
     return await this.productRepository.save(newProduct);
   }
   async findAll(
-    paginationArgs: PaginationArgs,
+    paginationArgs: PaginationArgs = { limit: 100, offset: 0 },
     searchArgs: SearchArgs,
-    type?: string,
   ): Promise<Product[]> {
     const { limit, offset } = paginationArgs;
     const { search } = searchArgs;
@@ -36,15 +35,44 @@ export class ProductsService {
       .skip(offset);
 
     if (search) {
-      queryBuilder.andWhere('LOWER(product.name) LIKE :search', { search: `%${search.toLowerCase()}%` });
-    }
-
-    if (type) {
-      queryBuilder.andWhere('LOWER(product.type) LIKE :type', { type: `%${type.toLowerCase()}%` });
+      queryBuilder.andWhere('LOWER(product.type) LIKE :search', {
+        search: `%${search.toLowerCase()}%`,
+      });
     }
 
     return await queryBuilder.getMany();
   }
+
+  async countAll(): Promise<number> {
+    return await this.productRepository.count();
+  }
+
+  // async findAll(
+  //   paginationArgs: PaginationArgs,
+  //   searchArgs: SearchArgs,
+  //   type?: string,
+  // ): Promise<Product[]> {
+  //   const { limit, offset } = paginationArgs;
+  //   const { search } = searchArgs;
+
+  //   const whereCondition: any = {};
+  //   if (search) {
+  //     whereCondition.name = Like(`%${search}%`);
+  //   }
+
+  //   if (type) {
+  //     whereCondition.type = type;
+  //   }
+
+  //   return await this.productRepository.find({
+  //     where: whereCondition,
+  //     take: limit,
+  //     skip: offset,
+  //   });
+
+  // }
+
+
   async findOne(id: string): Promise<Product> {
     const product = await this.productRepository.findOneBy({ id })
     if (!product) throw new NotFoundException(`No se encontro el producto con el #${id}`)

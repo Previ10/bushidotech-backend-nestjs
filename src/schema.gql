@@ -38,11 +38,16 @@ type AuthResponse {
   user: User!
 }
 
+type ProductListResponse {
+  items: [Product!]!
+  itemCount: Int!
+}
+
 type Query {
   getUsers(rols: [ValidRols!] = []): [User!]!
   getUser(id: ID!): User!
   revalidate: AuthResponse!
-  getProducts(offset: Int = 0, limit: Int = 10, search: String): [Product!]!
+  getProducts(offset: Int = 0, limit: Int = 100, search: String): ProductListResponse!
   getProductByid(id: ID!): Product!
 }
 

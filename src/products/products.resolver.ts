@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ID , ResolveField, Parent} from '@nestjs/graphql';
 import { ProductsService } from './products.service';
 import { Product } from './entities/product.entity';
 import { UpdateProductInput } from './dto/inputs/update-product.input';
@@ -6,6 +6,7 @@ import { CreateProductInput } from './dto/inputs/create-product.input';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { PaginationArgs , SearchArgs } from './args/';
+import { ProductListResponse } from './dto/inputs/product-list-response';
 
 @Resolver(() => Product)
 export class ProductsResolver {
@@ -17,15 +18,15 @@ export class ProductsResolver {
     return await this.productsService.create(createProductInput);
   }
 
-  @Query(() => [Product], { name: 'getProducts' })
+  @Query(() => ProductListResponse, { name: 'getProducts' })
   async findAll(
     @Args() paginationArgs: PaginationArgs,
-    @Args() SearchArgs: SearchArgs,
-  ): Promise<Product[]> {
-    console.log(paginationArgs, SearchArgs)
+    @Args() searchArgs: SearchArgs,
+  ): Promise<ProductListResponse> {
+    const items = await this.productsService.findAll(paginationArgs, searchArgs);
+    const itemCount = items.length; 
 
-    return this.productsService.findAll(paginationArgs, SearchArgs);
-
+    return { items, itemCount };
   }
 
 
@@ -44,4 +45,6 @@ export class ProductsResolver {
   removeProduct(@Args('id', { type: () => Int }) id: number) {
     return this.productsService.remove(id);
   }
+
+
 }
