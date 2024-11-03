@@ -44,6 +44,7 @@ export class AuthService {
       user,
     };
   }
+  
   async validateUser(id:string): Promise<User>{
    const user = await this.userService.findOneByid(id);
    if(!user.isActive ){

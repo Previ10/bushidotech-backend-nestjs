@@ -39,9 +39,13 @@ export class UserService {
 
       const newUser = this.usersRepository.create({
         ...signupInput,
-        passWord: bcrypt.hashSync(signupInput.passWord, 10)
-      });
+        passWord: bcrypt.hashSync(signupInput.passWord, 10),
 
+        
+        
+      });
+       console.log(newUser.passWord);
+       
       const savedUser = await this.usersRepository.save(newUser);
 
       let dataEmail = {
