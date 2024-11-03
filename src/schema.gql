@@ -30,6 +30,7 @@ type User {
   rol: [String!]!
   isActive: Boolean!
   products: [Product!]
+  cart: [Product!]
 }
 
 type AuthResponse {
@@ -58,6 +59,8 @@ type Mutation {
   deleteUserById(id: ID!): User!
   addProductToFavorites(userId: Int!, productId: String!): User!
   removeFromFavorites(userId: Float!, productId: String!): User!
+  addProductToCart(userId: Int!, productId: String!): User!
+  removeFromCart(userId: Int!, productId: String!): User!
   signup(signupInput: SignupInput!): AuthResponse!
   login(loginInput: LoginInput!): AuthResponse!
   createProduct(createProductInput: CreateProductInput!): Product!
