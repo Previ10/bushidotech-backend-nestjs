@@ -3,31 +3,51 @@ import { CreateProductInput } from './dto/inputs/create-product.input';
 import { UpdateProductInput } from './dto/inputs/update-product.input';
 import { Product } from './entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
+import { PaginationArgs, SearchArgs } from './args';
+import { take } from 'rxjs';
+
 
 @Injectable()
 export class ProductsService {
   private product: Product[] = []
 
-  constructor( @InjectRepository(Product)
-  private readonly productRepository: Repository<Product>){
-   
-    
+  constructor(@InjectRepository(Product)
+  private readonly productRepository: Repository<Product>) {
+
+
   }
 
   async create(createProductInput: CreateProductInput): Promise<Product> {
     const newProduct = this.productRepository.create(createProductInput)
     return await this.productRepository.save(newProduct);
   }
+  async findAll(
+    paginationArgs: PaginationArgs,
+    searchArgs: SearchArgs,
+    type?: string,
+  ): Promise<Product[]> {
+    const { limit, offset } = paginationArgs;
+    const { search } = searchArgs;
 
-  findAll(): Promise<Product[]> {
-    return this.productRepository.find()
-    
+    const queryBuilder = this.productRepository
+      .createQueryBuilder('product')
+      .take(limit)
+      .skip(offset);
+
+    if (search) {
+      queryBuilder.andWhere('LOWER(product.name) LIKE :search', { search: `%${search.toLowerCase()}%` });
+    }
+
+    if (type) {
+      queryBuilder.andWhere('LOWER(product.type) LIKE :type', { type: `%${type.toLowerCase()}%` });
+    }
+
+    return await queryBuilder.getMany();
   }
-
-  async findOne(id: string ): Promise<Product> {
-    const product = await this.productRepository.findOneBy({id})
-    if(!product) throw new NotFoundException(`No se encontro el producto con el #${id}`)
+  async findOne(id: string): Promise<Product> {
+    const product = await this.productRepository.findOneBy({ id })
+    if (!product) throw new NotFoundException(`No se encontro el producto con el #${id}`)
     return await product;
   }
 
