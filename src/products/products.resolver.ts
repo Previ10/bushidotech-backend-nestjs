@@ -3,8 +3,6 @@ import { ProductsService } from './products.service';
 import { Product } from './entities/product.entity';
 import { UpdateProductInput } from './dto/inputs/update-product.input';
 import { CreateProductInput } from './dto/inputs/create-product.input';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { PaginationArgs , SearchArgs } from './args/';
 import { ProductListResponse } from './dto/inputs/product-list-response';
 
@@ -13,7 +11,6 @@ export class ProductsResolver {
   constructor(private readonly productsService: ProductsService) {}
 
   @Mutation(() => Product , {name: 'createProduct'})
-  @UseGuards(JwtAuthGuard)
   async createProduct(@Args('createProductInput') createProductInput: CreateProductInput):Promise<Product>{
     return await this.productsService.create(createProductInput);
   }
