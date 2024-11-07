@@ -78,7 +78,8 @@ type Mutation {
   signup(signupInput: SignupInput!): AuthResponse!
   login(loginInput: LoginInput!): AuthResponse!
   createProduct(createProductInput: CreateProductInput!): Product!
-  updateProduct(id: Int!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  deleteProduct(id: String!): String!
   createFeature(createFeatureInput: FeatureInput!): Feature!
   updateFeature(updateFeatureInput: UpdateFeatureInput!): Feature!
   removeFeature(id: Int!): Feature!
@@ -143,6 +144,19 @@ input FeatureInput {
   conectividad: [String!]
   consumoEnergia: [String!]
   dimensiones: [String!]
+}
+
+input UpdateProductInput {
+  name: String
+  features: FeatureInput
+  description: String
+  image: String
+  brand: String
+  type: String
+  precio: Float
+  stock: Int
+  garantia: [String!]
+  id: Int!
 }
 
 input UpdateFeatureInput {

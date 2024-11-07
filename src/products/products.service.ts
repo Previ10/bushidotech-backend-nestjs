@@ -57,7 +57,18 @@ export class ProductsService {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async deleteProduct(id: string): Promise<Product> {
+    try {
+      const product = await this.findOne(id);
+  
+      if (!product) {
+        throw new NotFoundException(`No se encontró el producto con el ID ${id}`);
+      }
+  
+      await this.productRepository.remove(product);
+      return product;
+    } catch (error) {
+      throw new Error(`Error al eliminar el producto con ID ${id}: ${error.message}`);
+    }
   }
 }
