@@ -1,5 +1,6 @@
 import { InputType, Int, Field, Float } from '@nestjs/graphql';
 import { IsArray, IsNotEmpty, IsNumber, IsString, IsOptional } from 'class-validator';
+import { FeatureInput } from 'src/features/dto/create-feature.input';
 
 @InputType()
 export class CreateProductInput {
@@ -8,11 +9,10 @@ export class CreateProductInput {
   @Field(() => String)
   name: string;
 
-  @IsArray()
-  @IsString({ each: true })
-  @IsNotEmpty()
-  @Field(() => [String])
-  features: string[];
+  @IsOptional()
+  @Field(() => FeatureInput, { nullable: true })
+  features?: FeatureInput;
+
 
   @IsString()
   @IsOptional()

@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
+import { FeaturesModule } from './features/features.module';
 
 
 @Module({
@@ -36,6 +37,7 @@ import { ProductsModule } from './products/products.module';
     UserModule,
     AuthModule,
     ProductsModule,
+    FeaturesModule,
   ],
   controllers: [],
   providers: [],

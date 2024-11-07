@@ -2,10 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Feature {
+  general: [String!]
+  conectividad: [String!]
+  consumoEnergia: [String!]
+  dimensiones: [String!]
+}
+
 type Product {
   id: ID!
   name: String!
-  features: [String!]!
+  features: Feature
   description: String
   image: String
   brand: String
@@ -49,6 +56,8 @@ type Query {
   revalidate: AuthResponse!
   getProducts(offset: Int = 0, limit: Int = 100, search: String): ProductListResponse!
   getProductByid(id: ID!): Product!
+  features: [Feature!]!
+  feature(id: Int!): Feature!
 }
 
 """These are authorized roles"""
@@ -70,6 +79,9 @@ type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(id: Int!): Product!
+  createFeature(createFeatureInput: FeatureInput!): Feature!
+  updateFeature(updateFeatureInput: UpdateFeatureInput!): Feature!
+  removeFeature(id: Int!): Feature!
 }
 
 input CreateUserInput {
@@ -116,7 +128,7 @@ input LoginInput {
 
 input CreateProductInput {
   name: String!
-  features: [String!]!
+  features: FeatureInput
   description: String
   image: String
   brand: String
@@ -124,4 +136,19 @@ input CreateProductInput {
   precio: Float
   stock: Int
   garantia: [String!]
+}
+
+input FeatureInput {
+  general: [String!]
+  conectividad: [String!]
+  consumoEnergia: [String!]
+  dimensiones: [String!]
+}
+
+input UpdateFeatureInput {
+  general: [String!]
+  conectividad: [String!]
+  consumoEnergia: [String!]
+  dimensiones: [String!]
+  id: Int!
 }

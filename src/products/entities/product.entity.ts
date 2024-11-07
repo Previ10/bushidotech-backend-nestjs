@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType, Float } from '@nestjs/graphql';
+import { Feature } from 'src/features/entities/feature.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
@@ -13,9 +14,10 @@ export class Product {
   @Field()
   name: string;
 
-  @Column('text', { array: true })
-  @Field(() => [String])
-  features: string[];
+  @Column(() => Feature,)
+  @Field(() => Feature, { nullable: true })
+  features?: Feature;
+
 
   @Column({ nullable: true })
   @Field(() => String, { nullable: true })

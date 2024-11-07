@@ -3,9 +3,8 @@ import { CreateProductInput } from './dto/inputs/create-product.input';
 import { UpdateProductInput } from './dto/inputs/update-product.input';
 import { Product } from './entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
 import { PaginationArgs, SearchArgs } from './args';
-import { take } from 'rxjs';
 
 
 @Injectable()
@@ -19,7 +18,7 @@ export class ProductsService {
   }
 
   async create(createProductInput: CreateProductInput): Promise<Product> {
-    const newProduct = this.productRepository.create(createProductInput)
+    const newProduct = this.productRepository.create(createProductInput);
     return await this.productRepository.save(newProduct);
   }
   async findAll(
@@ -46,31 +45,6 @@ export class ProductsService {
   async countAll(): Promise<number> {
     return await this.productRepository.count();
   }
-
-  // async findAll(
-  //   paginationArgs: PaginationArgs,
-  //   searchArgs: SearchArgs,
-  //   type?: string,
-  // ): Promise<Product[]> {
-  //   const { limit, offset } = paginationArgs;
-  //   const { search } = searchArgs;
-
-  //   const whereCondition: any = {};
-  //   if (search) {
-  //     whereCondition.name = Like(`%${search}%`);
-  //   }
-
-  //   if (type) {
-  //     whereCondition.type = type;
-  //   }
-
-  //   return await this.productRepository.find({
-  //     where: whereCondition,
-  //     take: limit,
-  //     skip: offset,
-  //   });
-
-  // }
 
 
   async findOne(id: string): Promise<Product> {
