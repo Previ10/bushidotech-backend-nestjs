@@ -57,7 +57,7 @@ export class ProductsService {
     return `This action updates a #${id} product`;
   }
 
-  async deleteProduct(id: string): Promise<Product> {
+  async deleteProduct(id: string): Promise<string> {
     try {
       const product = await this.findOne(id);
   
@@ -66,7 +66,7 @@ export class ProductsService {
       }
   
       await this.productRepository.remove(product);
-      return product;
+      return 'Producto eliminado correctamente';
     } catch (error) {
       throw new Error(`Error al eliminar el producto con ID ${id}: ${error.message}`);
     }

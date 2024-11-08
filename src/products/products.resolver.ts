@@ -39,8 +39,7 @@ export class ProductsResolver {
   }
   @Mutation(() => String, { name: 'deleteProduct' })
   async deleteProduct(@Args('id', { type: () => String }) id: string): Promise<string> {
-    await this.productsService.deleteProduct(id);
-    return id;
+    return await this.productsService.deleteProduct(id);
   }
   
 
