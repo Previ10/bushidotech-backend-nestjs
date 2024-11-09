@@ -83,6 +83,7 @@ type Mutation {
   createFeature(createFeatureInput: FeatureInput!): Feature!
   updateFeature(updateFeatureInput: UpdateFeatureInput!): Feature!
   removeFeature(id: Int!): Feature!
+  createPreference(createPreferenceInput: CreatePreferenceDto!): String!
 }
 
 input CreateUserInput {
@@ -165,4 +166,9 @@ input UpdateFeatureInput {
   consumoEnergia: [String!]
   dimensiones: [String!]
   id: Int!
+}
+
+input CreatePreferenceDto {
+  productId: String!
+  quantity: Int!
 }

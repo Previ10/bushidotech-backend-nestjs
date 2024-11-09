@@ -1,7 +1,7 @@
 {
   "name": "bushidotech-api",
   "version": "0.0.1",
-  "description": "",
+  "description": "[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -32,15 +32,18 @@
     "@nestjs/typeorm": "^10.0.2",
     "@types/mustache": "^4.2.5",
     "apollo-server-core": "^3.13.0",
+    "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cloudinary": "^2.5.1",
+    "cors": "^2.8.5",
     "ejs": "^3.1.10",
     "fs": "^0.0.1-security",
     "graphql": "^16.8.1",
     "handlebars": "^4.7.8",
+    "mercadopago": "^2.0.15",
     "mustache": "^4.2.0",
     "nodemailer": "^6.9.14",
     "passport": "^0.7.0",
@@ -91,5 +94,10 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": []
 }

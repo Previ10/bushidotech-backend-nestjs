@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { FeaturesModule } from './features/features.module';
+import { PaymentsModule } from './mercadopago/mercadopago.module';
 
 
 @Module({
@@ -38,6 +39,7 @@ import { FeaturesModule } from './features/features.module';
     AuthModule,
     ProductsModule,
     FeaturesModule,
+    PaymentsModule,
   ],
   controllers: [],
   providers: [],
