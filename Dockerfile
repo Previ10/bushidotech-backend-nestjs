@@ -7,7 +7,6 @@ COPY package*.json ./
 RUN npm install --build-from-source
 
 COPY . .
-
 RUN npm run build
 
 EXPOSE 3000
