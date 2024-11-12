@@ -1,5 +1,5 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { MercadoPagoService } from './mercadoPago.service';
+import { MercadoPagoService } from './mercadopago.service';
 import { CreatePreferenceDto } from './dto/preference-dto';
 
 @Resolver()

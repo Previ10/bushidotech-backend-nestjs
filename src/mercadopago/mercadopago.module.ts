@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { MercadoPagoService } from './mercadoPago.service';
-import { MercadoPagoResolver } from './mercadoPago.resolver';
+import { MercadoPagoService } from './mercadopago.service';
+import { MercadoPagoResolver } from './mercadopago.resolver';
 import { ProductsModule } from 'src/products/products.module';
 
 @Module({
