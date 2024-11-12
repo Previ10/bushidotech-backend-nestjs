@@ -54,7 +54,7 @@ type Query {
   getUsers(rols: [ValidRols!] = []): [User!]!
   getUser(id: ID!): User!
   revalidate: AuthResponse!
-  getProducts(offset: Int = 0, limit: Int = 100, search: String): ProductListResponse!
+  getProducts(offset: Int = 0, limit: Int = 40, search: String, filterName: String): ProductListResponse!
   getProductByid(id: ID!): Product!
   features: [Feature!]!
   feature(id: Int!): Feature!

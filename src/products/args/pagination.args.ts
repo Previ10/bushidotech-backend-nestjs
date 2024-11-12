@@ -11,6 +11,6 @@ export class PaginationArgs{
     @Min(1)
     @IsOptional()
     @Field(()=> Int, { nullable:true})
-    limit: number = 100;
+    limit: number = 40;
 }
 

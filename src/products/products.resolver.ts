@@ -3,7 +3,7 @@ import { ProductsService } from './products.service';
 import { Product } from './entities/product.entity';
 import { UpdateProductInput } from './dto/inputs/update-product.input';
 import { CreateProductInput } from './dto/inputs/create-product.input';
-import { PaginationArgs , SearchArgs } from './args/';
+import { PaginationArgs , SearchArgs, FilterName } from './args/';
 import { ProductListResponse } from './dto/inputs/product-list-response';
 
 @Resolver(() => Product)
@@ -19,8 +19,9 @@ export class ProductsResolver {
   async findAll(
     @Args() paginationArgs: PaginationArgs,
     @Args() searchArgs: SearchArgs,
+    @Args() filterName: FilterName,
   ): Promise<ProductListResponse> {
-    const items = await this.productsService.findAll(paginationArgs, searchArgs);
+    const items = await this.productsService.findAll(paginationArgs, searchArgs, filterName);
     const itemCount = items.length; 
 
     return { items, itemCount };

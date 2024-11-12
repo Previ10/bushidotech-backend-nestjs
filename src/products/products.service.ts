@@ -4,7 +4,7 @@ import { UpdateProductInput } from './dto/inputs/update-product.input';
 import { Product } from './entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
-import { PaginationArgs, SearchArgs } from './args';
+import { PaginationArgs, SearchArgs, FilterName } from './args';
 
 
 @Injectable()
@@ -21,26 +21,36 @@ export class ProductsService {
     const newProduct = this.productRepository.create(createProductInput);
     return await this.productRepository.save(newProduct);
   }
+  
   async findAll(
     paginationArgs: PaginationArgs = { limit: 100, offset: 0 },
     searchArgs: SearchArgs,
+    filterArgs: FilterName,
   ): Promise<Product[]> {
     const { limit, offset } = paginationArgs;
     const { search } = searchArgs;
-
+    const { filterName } = filterArgs;
+  
     const queryBuilder = this.productRepository
       .createQueryBuilder('product')
       .take(limit)
       .skip(offset);
-
+  
     if (search) {
       queryBuilder.andWhere('LOWER(product.type) LIKE :search', {
         search: `%${search.toLowerCase()}%`,
       });
     }
-
+  
+    if (filterName) {
+      queryBuilder.andWhere('LOWER(product.name) LIKE :filterName', {
+        filterName: `%${filterName.toLowerCase()}%`,
+      });
+    }
+  
     return await queryBuilder.getMany();
   }
+  
 
   async countAll(): Promise<number> {
     return await this.productRepository.count();
